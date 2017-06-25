@@ -4,6 +4,37 @@
   </head>
   <body>
     <h1>Video Streaming Demonstration</h1>
-    <img id="bg" src="{{ url_for('video_feed') }}">
+    <img name = "bg" id="bg" src="{{ url_for('video_feed') }}">
+
+
+
+
+<!-- 
+<div id="place_for_suggestions"></div>
+<button id="search_form_input">Click</button>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+ -->
+<!-- 
+<script>
+$("#search_form_input").click(function(){
+    $.ajax({
+      url: "/suggestions",
+      type: "get",
+      data: {},
+      success: function(response) {
+        $("#place_for_suggestions").html(response);
+      },
+      error: function(xhr) {
+        //Do Something to handle error
+      }
+    });
+});
+</script>
+
+
+   -->
+
+
+
   </body>
 </html>

@@ -1,7 +1,7 @@
 import cv2
 import logging
 import time
-from get_face import get_attributes
+
 import cognitive_face as CF
 
 logger = logging.getLogger()
@@ -19,7 +19,10 @@ CF.BaseUrl.set(BASE_URL)
 
 class VideoCamera(object):
     def __init__(self):
+        cv2.namedWindow("preview", CV_WINDOW_AUTOSIZE)
         self.video = cv2.VideoCapture(0)
+        #cv2.waitKey(1);
+
        
     def __del__(self):
         self.video.release()
@@ -27,45 +30,54 @@ class VideoCamera(object):
     
     
     def get_frame(self):
-        personGroupId = 'myfriends'
+        
 
         success, image = self.video.read()
+
         ret, jpeg = cv2.imencode('.jpg', image)
 
         #cv2.imwrite("test.jpg", image)
 
         jpeg_bytes = jpeg.tobytes()
         #gets a list of the faces it's found in the webcam shot
-        out = get_attributes(jpeg_bytes)
 
-        if len(out) > 0:
+        return {'image':image, 'jpeg_bytes':jpeg_bytes}
+
+    def doAPI(self, image,people_in_frame):
+
+        personGroupId = 'myfriends'
+        rects = [x['faceRectangle'] for x in people_in_frame]
+        logger.info(rects)
+        for rect in rects:
+            x, y, h, w = (rect['left'], rect['top'], rect['height'], rect['width'])
+            logger.info(str(x) + ' ' + str(y)+ ' ' + str(h) + ' ' + str(w));
+            cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
+        cv2.imshow("preview", image)
+        cv2.waitKey(100)
+
+
+        person = {}
+
+            #cv2.destroyAllWindows()
+        if len(people_in_frame) > 0:
             #logger.info(out[0]['faceAttributes']['emotion']['surprise'])
-            logger.info(out)
-            faceIds = [x['faceId'] for x in out]
             #logger.info(out)
-            logger.info(faceIds)
-
+            faceIds = [x['faceId'] for x in people_in_frame]
+            #logger.info(out)
+            #logger.info(faceIds)
             results = CF.face.identify(faceIds, personGroupId);
+            #logger.info(results)
+            for identifyResult in results :
+                logger.info("Result of face: " + identifyResult['faceId']);
+                if len(identifyResult['candidates']) == 0:
+                    logger.info("No one identified");
+                else:
+                    # Get top 1 among all candidates returned
+                    candidateId = identifyResult['candidates'][0]['personId'];
+                    #person = CF.person.get(personGroupId, candidateId);
+                    logger.info("Identified as " + candidateId);
+                
+        #time.sleep(1)
 
-            logger.info(results)
-            # for identifyResult in results :
-            #     logger.info("Result of face: " + identifyResult['faceId']);
-            #     if (identifyResult['Candidates'].Length == 0)
-            #     {
-            #         Console.WriteLine("No one identified");
-            #     }
-            #     else
-            #     {
-            #         // Get top 1 among all candidates returned
-            #         var candidateId = identifyResult.Candidates[0].PersonId;
-            #         var person = await faceServiceClient.GetPersonAsync(personGroupId, candidateId);
-            #         Console.WriteLine("Identified as {0}", person.Name);
-            #     }
-            
-
-
-   
-        time.sleep(4)
+        return person
         #send image to API and compare against participants
-
-        return jpeg_bytes
