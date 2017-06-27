@@ -1,0 +1,70 @@
+* {
+	font-family: Calibri, Arial, sans-serif;
+	/* border: 1px solid black; */
+}
+
+.titleBar {
+	height: 75px;
+	width: 100%;
+	background-color: #4285F4;
+	color: white;
+	text-align: center;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+}
+
+.form {
+	padding-top: 75px;
+	font-size: 20px;
+}
+
+.form input {
+	height: 2em;
+	width: 70%;
+	font-size: 24px;
+}
+
+.titleBar h1 {
+	line-height: 100%;
+}
+
+.leftCol {
+	text-align: center;
+	width: 50%;
+	float: left;
+}
+
+.rightCol {
+	text-align: center;
+	width: 50%;
+	float: right;
+}
+
+.submitDiv {
+	padding-top: 50px;
+	width: 100%;
+	height: 5%;
+}
+
+.submitButton {
+	width: 80%;
+	height: 100%;
+	position: relative;
+	top: 10%;
+	left: 10%;
+}
+
+.cameraInput {
+	clear: both;
+	text-align: center;
+}
+
+.cameraInput input {
+	font-size: 18px;
+}
+
+.logo {
+	text-align: center;
+}

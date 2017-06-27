@@ -1,11 +1,36 @@
 import numpy as np
 import cv2
-from get_face import get_attributes
 import logging
 import httplib, urllib
 import json
 
 import cognitive_face as CF
+
+import base64
+
+
+def get_attributes(image,conn, headers, params):
+    
+    # The URL of a JPEG image to analyze.
+    # body = "{'url':'https://upload.wikimedia.org/wikipedia/commons/c/c3/RH_Louise_Lillian_Gish.jpg'}"
+    # body = image
+    try:
+        # Execute the REST API call and get the response.
+        
+        conn.request("POST", "/face/v1.0/detect?%s" % params, image, headers)
+        response = conn.getresponse()
+        data = response.read()
+        
+        # 'data' contains the JSON data. The following formats the JSON data for display.
+        parsed = json.loads(data)
+        print(data)
+        #json_out = json.dumps(parsed, sort_keys=True, indent=2)
+        return parsed
+    #conn.close()
+    
+    except Exception as e:
+        print("[Errno {0}] {1}".format(e.errno, e.strerror))
+
 
 KEY = '77abe08c92574606aa8aa15b3c987e7f'  # Replace with a valid Subscription Key here.
 CF.Key.set(KEY)
@@ -19,10 +44,10 @@ hdlr = logging.FileHandler('./log.log')
 formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
 hdlr.setFormatter(formatter)
 logger.addHandler(hdlr) 
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.ERROR)
 
-cap = cv2.VideoCapture(0)
-cv2.namedWindow("preview")
+cap = cv2.VideoCapture('./times.mp4')
+cv2.namedWindow("preview",cv2.WND_PROP_FULLSCREEN)
 
 conn = httplib.HTTPSConnection('westeurope.api.cognitive.microsoft.com')
 
@@ -64,6 +89,9 @@ while(True):
     ret, image = cap.read()
     ret, jpeg = cv2.imencode('.jpg', image)
     jpeg_bytes = jpeg.tobytes()
+
+
+
     people_in_frame = get_attributes(jpeg_bytes, conn, headers, params)
 
     logger.info(people_in_frame)
@@ -103,11 +131,12 @@ while(True):
                 print("Identified as " + person['name']);
                 font = cv2.FONT_HERSHEY_SIMPLEX
                 cv2.putText(image,person['name'],(coords[i][0] + coords[i][3],coords[i][1]+ coords[i][2]), font, 1,(0, 255, 0),1,cv2.LINE_AA)
-                cv2.putText(image,'-'.join(json.loads(person['userData'])['skills']),(coords[i][0] ,coords[i][1]-10), font, 0.7,(0, 255, 0),1,cv2.LINE_AA)
+                cv2.putText(image,'-'.join(json.loads(person['userData'])['skills']),(coords[i][0] ,coords[i][1]-7), font, 0.7,(0, 255, 0),1,cv2.LINE_AA)
+                #cv2.putText(image,json.loads(person['userData'])['Role'],(coords[i][0] ,coords[i][1]-7), font, 0.7,(0, 255, 0),1,cv2.LINE_AA)
             i = i + 1
 
         cv2.imshow("preview", image)
-        cv2.waitKey(1000)
+        cv2.waitKey(10)
 
 # When everything done, release the capture
 conn.close()
