@@ -48,8 +48,8 @@ hdlr.setFormatter(formatter)
 logger.addHandler(hdlr) 
 logger.setLevel(logging.ERROR)
 
-cap = cv2.VideoCapture('./times.mp4')
-#cap = cv2.VideoCapture() #use this line for the webcam
+#cap = cv2.VideoCapture('./times.mp4') #use this line for the video
+cap = cv2.VideoCapture() #use this line for the webcam
 cv2.namedWindow("preview",cv2.WND_PROP_FULLSCREEN)
 
 conn = httplib.HTTPSConnection('westeurope.api.cognitive.microsoft.com')
