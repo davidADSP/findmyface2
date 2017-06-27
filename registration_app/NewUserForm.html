@@ -1,0 +1,82 @@
+<html>
+<head>
+	<title>New User Signup</title>
+	<link rel="stylesheet" href="findmyface.css">
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css">
+	<script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+	<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.jquery.js"></script>
+	
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.css">
+</head>
+<body>
+	<div class="titleBar">
+		<h1>Register for FindMyFace</h1>
+	</div>
+	<div class="form">
+	<form action="sendData.cgi" method="POST">
+		<div class="leftCol">
+			First name:<br>
+			<input type="text" name="firstName" required/><br>
+		</div>
+		<div class="rightCol">
+			Last name:<br>
+			<input type="text" name="lastName" required/><br>
+		</div>
+		<div class="leftCol">
+			Role:<br>
+			<input type="text" name="role"required /><br>
+		</div>
+		<div class="rightCol">
+			Company:<br>
+			<input type="text" name="company" required/><br>
+		</div>
+		<div class="leftCol">
+			What are your skills? Separate them with commas.<br>
+			<!--<select multiple class="chzn-select" id="skills">
+			<option value="uiux">UI/UX</option>
+			<option value="dataScience">Data Science</option>
+			<option value="machineLearning">Machine Learning</option>
+			<option value="programming">Programming</option>
+			<option value="dataAnalysis">Data Analysis</option>
+			<option value="projectManagement">Project Management</option>
+			<option value="socialMedia">Social Media</option>
+			<option value="softwareEngineering">Software Engineering</option>
+			</select><br>-->
+			<input type="text" name="skills" required/><br>
+		</div>
+		<div class="rightCol">
+			What skills are you looking for? Separate them with commas.<br>
+			<!--<select multiple class="chzn-select" id="wants">
+			<option value="uiux">UI/UX</option>
+			<option value="dataScience">Data Science</option>
+			<option value="machineLearning">Machine Learning</option>
+			<option value="programming">Programming</option>
+			<option value="dataAnalysis">Data Analysis</option>
+			<option value="projectManagement">Project Management</option>
+			<option value="socialMedia">Social Media</option>
+			<option value="softwareEngineering">Software Engineering</option>
+			</select><br>-->
+			<input type="text" name="wants" required/><br>
+		</div>
+		<!--<div class="cameraInput">
+			Upload a picture of yourself:  
+			<input type="file" accept="image/.jpg" capture="camera" name="photo"><br>
+		</div>-->
+		<div style="height: 5px"></div>
+			<p style="color: white; font-size:0.5px;">yo</p>
+		<div class="submitDiv">
+			<input type="submit" value="Submit" class="submitButton">
+		</div>
+	</form>
+	</div>
+	<div class="logo">
+		<img src="logo.png">
+	</div>
+	<script type="text/javascript">
+		$(function() {
+			$(".chzn-select").chosen({max_selected_options: 5});
+		});
+	</script>
+	</body>
+</html>
