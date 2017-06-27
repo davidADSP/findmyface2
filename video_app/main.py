@@ -9,6 +9,8 @@ import cognitive_face as CF
 import base64
 
 
+
+
 def get_attributes(image,conn, headers, params):
     
     # The URL of a JPEG image to analyze.
@@ -47,6 +49,7 @@ logger.addHandler(hdlr)
 logger.setLevel(logging.ERROR)
 
 cap = cv2.VideoCapture('./times.mp4')
+#cap = cv2.VideoCapture() #use this line for the webcam
 cv2.namedWindow("preview",cv2.WND_PROP_FULLSCREEN)
 
 conn = httplib.HTTPSConnection('westeurope.api.cognitive.microsoft.com')
@@ -111,7 +114,7 @@ while(True):
 
         person = {}
 
-        personGroupId = 'myfriends'
+        personGroupId = 'users'
         faceIds = [x['faceId'] for x in people_in_frame]
         #logger.info(out)
         #logger.info(faceIds)
@@ -131,12 +134,14 @@ while(True):
                 print("Identified as " + person['name']);
                 font = cv2.FONT_HERSHEY_SIMPLEX
                 cv2.putText(image,person['name'],(coords[i][0] + coords[i][3],coords[i][1]+ coords[i][2]), font, 1,(0, 255, 0),1,cv2.LINE_AA)
-                cv2.putText(image,'-'.join(json.loads(person['userData'])['skills']),(coords[i][0] ,coords[i][1]-7), font, 0.7,(0, 255, 0),1,cv2.LINE_AA)
-                #cv2.putText(image,json.loads(person['userData'])['Role'],(coords[i][0] ,coords[i][1]-7), font, 0.7,(0, 255, 0),1,cv2.LINE_AA)
+            #cv2.putText(image,'-'.join(json.loads(person['userData'])['skills']),(coords[i][0] ,coords[i][1]-7), font, 0.7,(0, 255, 0),1,cv2.LINE_AA)
+                cv2.putText(image,json.loads(person['userData'])['Skills'],(coords[i][0] ,coords[i][1]-7), font, 0.7,(0, 255, 0),1,cv2.LINE_AA)
             i = i + 1
 
         cv2.imshow("preview", image)
-        cv2.waitKey(10)
+
+    cv2.waitKey(3000) # add delay (in ms) to not trigger the threshold
+
 
 # When everything done, release the capture
 conn.close()
