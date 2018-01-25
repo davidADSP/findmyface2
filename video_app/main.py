@@ -29,7 +29,7 @@ def get_attributes(image,conn, headers, params):
         print("[Errno {0}] {1}".format(e.errno, e.strerror))
 
 
-KEY = '77abe08c92574606aa8aa15b3c987e7f'  # Replace with a valid Subscription Key here.
+KEY = '89ab23ac10744742b8e3a6589ed766a6'  # Replace with a valid Subscription Key here.
 CF.Key.set(KEY)
 
 BASE_URL = 'https://westeurope.api.cognitive.microsoft.com/face/v1.0/'  # Replace with your regional Base URL
@@ -54,7 +54,7 @@ conn = httplib.HTTPSConnection('westeurope.api.cognitive.microsoft.com')
 ###############################################
 
 # Replace the subscription_key string value with your valid subscription key.
-subscription_key = '77abe08c92574606aa8aa15b3c987e7f'
+subscription_key = '89ab23ac10744742b8e3a6589ed766a6'
 
 # Replace or verify the region.
 #
@@ -129,8 +129,8 @@ while(True):
                 print("Identified as " + person['name']);
                 font = cv2.FONT_HERSHEY_SIMPLEX
                 cv2.putText(image,person['name'],(coords[i][0] + coords[i][3],coords[i][1]+ coords[i][2]), font, 1,(0, 255, 0),1,cv2.LINE_AA)
-            #cv2.putText(image,'-'.join(json.loads(person['userData'])['skills']),(coords[i][0] ,coords[i][1]-7), font, 0.7,(0, 255, 0),1,cv2.LINE_AA)
-                cv2.putText(image,json.loads(person['userData'])['Skills'],(coords[i][0] ,coords[i][1]-7), font, 0.7,(0, 255, 0),1,cv2.LINE_AA)
+                cv2.putText(image,'-'.join(json.loads(person['userData'])['skills']),(coords[i][0] ,coords[i][1]-7), font, 0.7,(0, 255, 0),1,cv2.LINE_AA)
+                #cv2.putText(image,json.loads(person['userData'])['Skills'],(coords[i][0] ,coords[i][1]-7), font, 0.7,(0, 255, 0),1,cv2.LINE_AA)
             i = i + 1
 
         cv2.imshow("preview", image)

@@ -8,6 +8,6 @@ BASE_URL = 'https://westeurope.api.cognitive.microsoft.com/face/v1.0/'  # Replac
 CF.BaseUrl.set(BASE_URL)
 
 
-person_group = 'users'
+personGroupId = "users";
+CF.person_group.train(personGroupId)
 
-print (CF.person.lists(person_group))

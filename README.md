@@ -3,11 +3,11 @@ A web app to find faces in a video stream and label the faces with the attribute
 
 # How to run the video app
 
-1. Download enough python libraries until you don't get an error with step 2
+1. Download enough libraries until you don't get an error with step 2
 2. run 'python main.py' from within the video_app folder
 3. create_pg.py creates a new person group
 4. get_users.py get the users from a person group
-5. add_to_pg add a person and face to a person group
+5. add_to_pg.py add a person and face to a person group
 
 # How to run the registration app
 
